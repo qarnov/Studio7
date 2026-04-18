@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studio 7 Events | Wedding & Event Management in Mangaluru</title>
+    <meta name="description" content="Studio 7 Events is Mangaluru's one-stop event management company — weddings, corporate events, venue booking, catering, music, décor, videography, and more.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;600&family=Oswald:wght@500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Tailwind Config for Gold Theme -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            black: '#0a0a0a',
+                            gold: '#D4AF37',
+                            goldLight: '#F4E4BC',
+                            goldDark: '#B8941F',
+                            bronze: '#8B7355',
+                            cream: '#F5F5DC',
+                            dark: '#111111',
+                            gray: '#1a1a1a'
+                        }
+                    },
+                    fontFamily: {
+                        anton: ['Anton', 'sans-serif'],
+                        oswald: ['Oswald', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'],
+                        playfair: ['Playfair Display', 'serif'],
+                    },
+                    backgroundImage: {
+                        'gold-gradient': 'linear-gradient(135deg, #D4AF37 0%, #F4E4BC 50%, #B8941F 100%)',
+                        'gold-shine': 'linear-gradient(90deg, transparent, rgba(255,215,0,0.4), transparent)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar - Gold Theme */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #D4AF37, #B8941F); 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #F4E4BC, #D4AF37); 
+        }
+
+        /* Noise Texture Overlay */
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.02;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Gold Text Effect */
+        .text-gold {
+            background: linear-gradient(135deg, #D4AF37 0%, #F4E4BC 30%, #D4AF37 60%, #B8941F 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0px 0px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .text-gold-solid {
+            color: #D4AF37;
+        }
+
+        /* 3D Gold Effect for Logo */
+        .logo-3d {
+            background: linear-gradient(135deg, #F4E4BC 0%, #D4AF37 30%, #B8941F 70%, #8B7355 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5)) drop-shadow(0 0 20px rgba(212, 175, 55, 0.3));
+            position: relative;
+        }
+
+        .logo-3d::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: -1;
+            background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(0,0,0,0.4));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transform: translate(2px, 2px);
+            filter: blur(1px);
+        }
+
+        /* Glitch Effect - Gold Version */
+        .glitch-wrapper {
+            position: relative;
+        }
+        
+        .glitch {
+            position: relative;
+            font-family: 'Anton', sans-serif;
+            letter-spacing: 0.05em;
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+        }
+
+        .glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 #D4AF37;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+
+        .glitch::after {
+            left: -2px;
+            text-shadow: -2px 0 #8B7355;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim2 5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% { clip: rect(30px, 9999px, 15px, 0); }
+            20% { clip: rect(80px, 9999px, 70px, 0); }
+            40% { clip: rect(10px, 9999px, 55px, 0); }
+            60% { clip: rect(50px, 9999px, 18px, 0); }
+            80% { clip: rect(90px, 9999px, 85px, 0); }
+            100% { clip: rect(35px, 9999px, 10px, 0); }
+        }
+
+        @keyframes glitch-anim2 {
+            0% { clip: rect(65px, 9999px, 100px, 0); }
+            20% { clip: rect(20px, 9999px, 30px, 0); }
+            40% { clip: rect(90px, 9999px, 95px, 0); }
+            60% { clip: rect(40px, 9999px, 60px, 0); }
+            80% { clip: rect(15px, 9999px, 25px, 0); }
+            100% { clip: rect(70px, 9999px, 80px, 0); }
+        }
+
+        .glitch-wrapper:hover .glitch::before,
+        .glitch-wrapper:hover .glitch::after {
+            animation-duration: 0.3s;
+        }
+
+        /* Gold Button Glow */
+        .btn-gold {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+        
+        .btn-gold::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn-gold:hover::before {
+            left: 100%;
+        }
+        
+        .btn-gold:hover {
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.6);
+            transform: translateY(-2px);
+        }
+
+        /* Outline Gold Button */
+        .btn-outline-gold {
+            border: 1px solid #D4AF37;
+            color: #D4AF37;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline-gold:hover {
+            background: rgba(212, 175, 55, 0.1);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+            border-color: #F4E4BC;
+            color: #F4E4BC;
+        }
+
+        /* Video Background */
+        .video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            filter: brightness(0.3) contrast(1.1) saturate(0.6) sepia(0.2);
+        }
+
+        /* Masonry Grid */
+        .masonry-grid {
+            column-count: 1;
+            column-gap: 1.5rem;
+        }
+        @media (min-width: 768px) {
+            .masonry-grid { column-count: 2; }
+        }
+        @media (min-width: 1024px) {
+            .masonry-grid { column-count: 3; }
+        }
+        
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Gold Line Accent */
+        .gold-line {
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #D4AF37, #F4E4BC, #B8941F);
+            margin-bottom: 1rem;
+        }
+
+        /* Border Glow */
+        .border-gold-glow {
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
+        }
+
+        .border-gold-glow:hover {
+            border-color: rgba(212, 175, 55, 0.6);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+        }
+
+        /* Service Card Hover */
+        .service-card {
+            background: rgba(17, 17, 17, 0.8);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            transition: all 0.5s ease;
+        }
+
+        .service-card:hover {
+            border-color: rgba(212, 175, 55, 0.4);
+            background: rgba(17, 17, 17, 0.95);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.1);
+        }
+
+        .service-card:hover .service-icon {
+            color: #D4AF37;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.5));
+        }
+
+        /* Decorative Frame */
+        .gold-frame-corner {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border: 2px solid #D4AF37;
+        }
+
+        .frame-tl { top: -10px; left: -10px; border-right: none; border-bottom: none; }
+        .frame-br { bottom: -10px; right: -10px; border-left: none; border-top: none; }
+
+        /* Tagline Style */
+        .tagline {
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            color: #8B7355;
+        }
+    </style>
+</head>
+<body class="bg-brand-black text-white font-inter overflow-x-hidden selection:bg-brand-gold selection:text-brand-black">
+
+    <!-- Noise Texture -->
+    <div class="noise-overlay"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-40 top-0 left-0 px-6 py-6 flex justify-between items-center bg-gradient-to-b from-brand-black/90 to-transparent backdrop-blur-sm">
+        <div class="glitch-wrapper cursor-pointer flex flex-col items-start">
+            <div class="glitch text-3xl md:text-4xl font-anton tracking-widest logo-3d" data-text="STUDIO 7">STUDIO 7</div>
+            <span class="tagline mt-1 hidden md:block">Events</span>
+        </div>
+        
+        <div class="hidden md:flex space-x-8 font-oswald text-sm tracking-widest uppercase">
+            <a href="#vision" class="hover:text-brand-gold transition-colors duration-300">The Vision</a>
+            <a href="#works" class="hover:text-brand-gold transition-colors duration-300">Works</a>
+            <a href="#services" class="hover:text-brand-gold transition-colors duration-300">Services</a>
+            <a href="#contact" class="hover:text-brand-gold transition-colors duration-300">Contact</a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button class="md:hidden text-brand-gold focus:outline-none" onclick="toggleMobileMenu()">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 bg-brand-black z-50 transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center space-y-8 md:hidden border-l border-brand-gold/20">
+        <button onclick="toggleMobileMenu()" class="absolute top-6 right-6 text-brand-gold">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+        <a href="#vision" onclick="toggleMobileMenu()" class="text-2xl font-oswald uppercase tracking-widest hover:text-brand-gold text-brand-gold/80">The Vision</a>
+        <a href="#works" onclick="toggleMobileMenu()" class="text-2xl font-oswald uppercase tracking-widest hover:text-brand-gold text-brand-gold/80">Works</a>
+        <a href="#services" onclick="toggleMobileMenu()" class="text-2xl font-oswald uppercase tracking-widest hover:text-brand-gold text-brand-gold/80">Services</a>
+        <a href="#contact" onclick="toggleMobileMenu()" class="text-2xl font-oswald uppercase tracking-widest hover:text-brand-gold text-brand-gold/80">Contact</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative h-screen w-full flex items-center justify-center overflow-hidden">
+        <!-- Background with Gold Tint -->
+        <div class="absolute inset-0 bg-brand-black">
+            <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070&auto=format&fit=crop" 
+                 alt="Event Background" 
+                 class="video-bg">
+            <div class="absolute inset-0 bg-gradient-to-b from-brand-black/90 via-brand-black/60 to-brand-black"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-brand-black/80 via-transparent to-brand-black/80"></div>
+        </div>
+
+        <div class="relative z-10 text-center px-4 max-w-6xl mx-auto">
+            <p class="tagline mb-6 opacity-0 hero-anim">Precision. Passion. Perfection.</p>
+            
+            <h1 class="font-anton text-5xl md:text-7xl lg:text-9xl uppercase leading-none mb-6 tracking-tight opacity-0 hero-anim">
+                WHERE PASSION<br>
+                <span class="text-gold">MEETS PERFECTION</span>
+            </h1>
+            
+            <p class="font-inter text-brand-goldLight/70 text-lg md:text-xl mb-4 max-w-2xl mx-auto opacity-0 hero-anim">
+                Studio 7 Events
+            </p>
+            
+            <p class="font-inter text-gray-400 text-sm md:text-base mb-10 max-w-xl mx-auto opacity-0 hero-anim">
+                Premium Event Management in Mangaluru, Karnataka
+            </p>
+            
+            <button class="btn-gold text-brand-black font-oswald uppercase tracking-widest px-10 py-4 text-lg font-bold opacity-0 hero-anim">
+                Launch Project
+            </button>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <svg class="w-6 h-6 text-brand-gold/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+            </svg>
+        </div>
+
+        <!-- Decorative Gold Lines -->
+        <div class="absolute left-10 top-1/3 w-px h-32 bg-gradient-to-b from-transparent via-brand-gold/50 to-transparent hidden lg:block"></div>
+        <div class="absolute right-10 bottom-1/3 w-px h-32 bg-gradient-to-b from-transparent via-brand-gold/50 to-transparent hidden lg:block"></div>
+    </section>
+
+    <!-- Authority Section (About) -->
+    <section id="vision" class="relative py-24 md:py-32 bg-brand-black px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="scroll-reveal-left relative">
+                    <div class="gold-line"></div>
+                    <h2 class="font-anton text-5xl md:text-7xl uppercase mb-6 text-white">
+                        The <span class="text-gold">Vision</span>
+                    </h2>
+                    <p class="font-inter text-gray-300 text-lg leading-relaxed mb-6">
+                        We don't just organize events. We engineer experiences. From concept to execution, Studio 7 is the invisible force behind the noise.
+                    </p>
+                    <p class="font-inter text-gray-400 leading-relaxed mb-8">
+                        Founded in Mangaluru on the principles of raw energy and meticulous precision, we transform blank spaces into immersive worlds. Whether it's a high-octane sports tournament or an exclusive brand launch, we bring the same intensity: <span class="text-brand-gold font-semibold">Absolute Commitment.</span>
+                    </p>
+                    
+                    <div class="flex items-center space-x-4">
+                        <div class="h-px flex-1 bg-gradient-to-r from-brand-gold/50 to-transparent"></div>
+                        <span class="tagline text-brand-gold">Est. 2026</span>
+                    </div>
+                </div>
+                
+                <div class="relative scroll-reveal-right">
+                    <div class="relative h-[500px] w-full overflow-hidden group border-gold-glow">
+                        <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2070&auto=format&fit=crop" 
+                             alt="Studio Work" 
+                             class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-brand-black via-transparent to-transparent"></div>
+                        
+                        <!-- Gold Frame Corners -->
+                        <div class="gold-frame-corner frame-tl"></div>
+                        <div class="gold-frame-corner frame-br"></div>
+                        
+                        <div class="absolute bottom-6 left-6">
+                            <p class="font-oswald text-brand-gold text-sm tracking-widest uppercase mb-1">Behind The Scenes</p>
+                            <p class="font-playfair italic text-white/80 text-sm">Crafting moments that matter</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="works" class="relative py-24 bg-brand-dark px-6 border-t border-brand-gold/10">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 scroll-reveal-up">
+                <div class="gold-line mx-auto"></div>
+                <h2 class="font-anton text-5xl md:text-7xl uppercase text-white">
+                    Recent <span class="text-gold">Works</span>
+                </h2>
+                <p class="font-inter text-gray-400 mt-4 font-playfair italic">Selected projects that define our legacy</p>
+            </div>
+
+            <!-- Featured Project - KSL Season 3 -->
+            <div class="mb-20 scroll-reveal-up">
+                <div class="relative group cursor-pointer overflow-hidden border-gold-glow bg-brand-gray">
+                    <div class="aspect-video relative">
+                        <img src="https://images.unsplash.com/photo-1517927033932-b3d18e61fb3a?q=80&w=2098&auto=format&fit=crop" 
+                             alt="KSL Season 3" 
+                             class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-1000">
+                        <div class="absolute inset-0 bg-gradient-to-t from-brand-black via-brand-black/60 to-transparent opacity-90"></div>
+                        <div class="absolute inset-0 bg-gradient-to-r from-brand-black/80 to-transparent"></div>
+                    </div>
+                    
+                    <div class="absolute bottom-0 left-0 p-8 md:p-12 w-full">
+                        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                            <div class="max-w-2xl">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <span class="w-8 h-px bg-brand-gold"></span>
+                                    <p class="text-brand-gold font-oswald tracking-widest text-sm uppercase">Featured Project</p>
+                                </div>
+                                <h3 class="font-anton text-4xl md:text-6xl uppercase mb-4 text-white">
+                                    KSL <span class="text-gold">SEASON 3</span>
+                                </h3>
+                                <p class="font-inter text-gray-300 mb-2">Organized by FC Silver Patla</p>
+                                <p class="font-inter text-gray-400">A football spectacle. Managed, produced, and executed by Studio 7. Over 10,000 attendees, 32 teams, one unforgettable championship.</p>
+                            </div>
+                            <a href="https://instagram.com/reel/DWWcGcfAmny/?igsh=YmY4bzdzaTY2Mlz" target="_blank" class="btn-outline-gold px-8 py-3 font-oswald uppercase tracking-widest transition-all duration-300 whitespace-nowrap inline-block text-center">
+                                View Case Study
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Decorative Number -->
+                    <div class="absolute top-8 right-8 font-anton text-8xl text-brand-gold/10 select-none pointer-events-none">01</div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="relative py-24 md:py-32 bg-brand-black px-6 border-t border-brand-gold/10">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-20 scroll-reveal-up">
+                <div class="gold-line mx-auto"></div>
+                <h2 class="font-anton text-5xl md:text-7xl uppercase text-white">
+                    What We <span class="text-gold">Do</span>
+                </h2>
+                <p class="font-playfair italic text-brand-goldLight/60 mt-4">Excellence in every detail</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Service 1: Wedding Planning -->
+                <div class="service-card p-8 scroll-reveal-up">
+                    <div class="service-icon w-16 h-16 mb-6 text-brand-gold/60 transition-all duration-300">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                        </svg>
+                    </div>
+                    <h3 class="font-oswald text-2xl uppercase mb-4 tracking-wide text-white">Wedding Planning</h3>
+                    <p class="font-inter text-gray-400 text-sm leading-relaxed mb-6">
+                        Your dream wedding, handled end to end. From mehendi to reception, we plan every detail so you can live the moment stress-free.
+                    </p>
+                    <div class="w-full h-px bg-gradient-to-r from-brand-gold/50 via-brand-gold/20 to-transparent"></div>
+                </div>
+
+                <!-- Service 2: Venue Booking -->
+                <div class="service-card p-8 scroll-reveal-up" style="transition-delay: 100ms;">
+                    <div class="service-icon w-16 h-16 mb-6 text-brand-gold/60 transition-all duration-300">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 0h.008v.008h-.008V7.5z" />
+                        </svg>
+                    </div>
+                    <h3 class="font-oswald text-2xl uppercase mb-4 tracking-wide text-white">Venue Booking</h3>
+                    <p class="font-inter text-gray-400 text-sm leading-relaxed mb-6">
+                        Access to the best banquet halls, resorts, and outdoor spaces. We find the perfect venue that fits your vision and budget.
+                    </p>
+                    <div class="w-full h-px bg-gradient-to-r from-brand-gold/50 via-brand-gold/20 to-transparent"></div>
+                </div>
+
+                <!-- Service 3: Catering -->
+                <div class="service-card p-8 scroll-reveal-up" style="transition-delay: 200ms;">
+                    <div class="service-icon w-16 h-16 mb-6 text-brand-gold/60 transition-all duration-300">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8.25v-1.5m0 1.5c-1.355 0-2.697.056-4.024.166C6.845 8.51 6 9.473 6 10.608v2.513m6-4.871c1.355 0 2.697.056 4.024.166C17.155 8.51 18 9.473 18 10.608v2.513M15 8.25v-1.5m-6 1.5v-1.5m12 9.75l-1.5.75a3.354 3.354 0 01-3 0 3.354 3.354 0 00-3 0 3.354 3.354 0 01-3 0 3.354 3.354 0 00-3 0 3.354 3.354 0 01-3 0L3 16.5m15-3.379a48.474 48.474 0 00-6-.371c-2.032 0-4.034.126-6 .371m12 0c.39.049.777.102 1.163.16 1.07.16 1.837 1.094 1.837 2.175v5.169c0 .621-.504 1.125-1.125 1.125H4.125A1.125 1.125 0 013 20.625v-5.17c0-1.08.768-2.014 1.837-2.174A47.78 47.78 0 016 13.12M12.265 3.11a.375.375 0 11-.53 0L12 2.845l.265.265z" />
+                        </svg>
+                    </div>
+                    <h3 class="font-oswald text-2xl uppercase mb-4 tracking-wide text-white">Catering</h3>
+                    <p class="font-inter text-gray-400 text-sm leading-relaxed mb-6">
+                        Multi-cuisine menus tailored to your event. From lavish wedding spreads to elegant corporate dining, we serve perfection on every plate.
+                    </p>
+                    <div class="w-full h-px bg-gradient-to-r from-brand-gold/50 via-brand-gold/20 to-transparent"></div>
+                </div>
+
+                <!-- Service 4: Photography & Videography -->
+                <div class="service-card p-8 scroll-reveal-up">
+                    <div class="service-icon w-16 h-16 mb-6 text-brand-gold/60 transition-all duration-300">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zM18.75 10.5h.008v.008h-.008V10.5z" />
+                        </svg>
+                    </div>
+                    <h3 class="font-oswald text-2xl uppercase mb-4 tracking-wide text-white">Photography & Videography</h3>
+                    <p class="font-inter text-gray-400 text-sm leading-relaxed mb-6">
+                        Cinematic storytelling that captures the raw emotion of your event. HD videography, drone shots, live streaming, and stunning photography.
+                    </p>
+                    <div class="w-full h-px bg-gradient-to-r from-brand-gold/50 via-brand-gold/20 to-transparent"></div>
+                </div>
+
+                <!-- Service 5: Music & DJ -->
+                <div class="service-card p-8 scroll-reveal-up" style="transition-delay: 100ms;">
+                    <div class="service-icon w-16 h-16 mb-6 text-brand-gold/60 transition-all duration-300">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 01-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z" />
+                        </svg>
+                    </div>
+                    <h3 class="font-oswald text-2xl uppercase mb-4 tracking-wide text-white">Music & DJ</h3>
+                    <p class="font-inter text-gray-400 text-sm leading-relaxed mb-6">
+                        Set the mood with the right sound. Professional DJs, live bands, sound systems, and curated playlists for every vibe.
+                    </p>
+                    <div class="w-full h-px bg-gradient-to-r from-brand-gold/50 via-brand-gold/20 to-transparent"></div>
+                </div>
+
+                <!-- Service 6: Décor & Design -->
+                <div class="service-card p-8 scroll-reveal-up" style="transition-delay: 200ms;">
+                    <div class="service-icon w-16 h-16 mb-6 text-brand-gold/60 transition-all duration-300">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+                        </svg>
+                    </div>
+                    <h3 class="font-oswald text-2xl uppercase mb-4 tracking-wide text-white">Décor & Design</h3>
+                    <p class="font-inter text-gray-400 text-sm leading-relaxed mb-6">
+                        Transform any space into a visual masterpiece. Themed décor, floral arrangements, stage design, and lighting that set the scene.
+                    </p>
+                    <div class="w-full h-px bg-gradient-to-r from-brand-gold/50 via-brand-gold/20 to-transparent"></div>
+                </div>
+
+                <!-- Service 7: Dance & Entertainment -->
+                <div class="service-card p-8 scroll-reveal-up">
+                    <div class="service-icon w-16 h-16 mb-6 text-brand-gold/60 transition-all duration-300">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="font-oswald text-2xl uppercase mb-4 tracking-wide text-white">Dance & Entertainment</h3>
+                    <p class="font-inter text-gray-400 text-sm leading-relaxed mb-6">
+                        Choreographed dance performances, comedian bookings, emcees, and live entertainment acts that keep your guests captivated all night.
+                    </p>
+                    <div class="w-full h-px bg-gradient-to-r from-brand-gold/50 via-brand-gold/20 to-transparent"></div>
+                </div>
+
+                <!-- Service 8: Corporate Events -->
+                <div class="service-card p-8 scroll-reveal-up" style="transition-delay: 100ms;">
+                    <div class="service-icon w-16 h-16 mb-6 text-brand-gold/60 transition-all duration-300">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0" />
+                        </svg>
+                    </div>
+                    <h3 class="font-oswald text-2xl uppercase mb-4 tracking-wide text-white">Corporate Events</h3>
+                    <p class="font-inter text-gray-400 text-sm leading-relaxed mb-6">
+                        Conferences, product launches, brand activations, and team outings. Professional execution that reflects your company's standards.
+                    </p>
+                    <div class="w-full h-px bg-gradient-to-r from-brand-gold/50 via-brand-gold/20 to-transparent"></div>
+                </div>
+
+                <!-- Service 9: Dress Shopping & Styling -->
+                <div class="service-card p-8 scroll-reveal-up" style="transition-delay: 200ms;">
+                    <div class="service-icon w-16 h-16 mb-6 text-brand-gold/60 transition-all duration-300">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="font-oswald text-2xl uppercase mb-4 tracking-wide text-white">Dress Shopping & Styling</h3>
+                    <p class="font-inter text-gray-400 text-sm leading-relaxed mb-6">
+                        Curated bridal and groom outfit sourcing, styling consultations, and trousseau planning to make sure you look your absolute best.
+                    </p>
+                    <div class="w-full h-px bg-gradient-to-r from-brand-gold/50 via-brand-gold/20 to-transparent"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="relative bg-brand-black pt-24 pb-12 px-6 border-t border-brand-gold/20">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-16 mb-16">
+                <div>
+                    <h2 class="font-anton text-5xl md:text-7xl uppercase mb-6 text-white">
+                        Ready to make<br><span class="text-gold">history?</span>
+                    </h2>
+                    <p class="font-inter text-gray-400 max-w-md mb-8">
+                        Don't settle for ordinary. Let's create something that leaves a mark. Get in touch with the team.
+                    </p>
+                    
+                    <div class="flex items-center gap-4">
+                        <div class="h-px w-12 bg-brand-gold"></div>
+                        <span class="tagline text-brand-gold">Precision. Passion. Perfection.</span>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col justify-center space-y-6">
+                    <a href="mailto:hello@studio7events.com" class="group flex items-center space-x-4 text-xl md:text-2xl font-oswald uppercase hover:text-brand-gold transition-colors text-white/90">
+                        <span class="w-12 h-12 rounded-full border border-brand-gold/30 flex items-center justify-center group-hover:border-brand-gold group-hover:bg-brand-gold/10 transition-all">
+                            <svg class="w-5 h-5 text-brand-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        </span>
+                        <span>hello@studio7events.com</span>
+                    </a>
+                    
+                    <a href="https://instagram.com" target="_blank" class="group flex items-center space-x-4 text-xl md:text-2xl font-oswald uppercase hover:text-brand-gold transition-colors text-white/90">
+                        <span class="w-12 h-12 rounded-full border border-brand-gold/30 flex items-center justify-center group-hover:border-brand-gold group-hover:bg-brand-gold/10 transition-all">
+                            <svg class="w-5 h-5 text-brand-gold" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        </span>
+                        <span>@studio7events</span>
+                    </a>
+
+                    <a href="https://wa.me/1234567890" target="_blank" class="group flex items-center space-x-4 text-xl md:text-2xl font-oswald uppercase hover:text-brand-gold transition-colors text-white/90">
+                        <span class="w-12 h-12 rounded-full border border-brand-gold/30 flex items-center justify-center group-hover:border-brand-gold group-hover:bg-brand-gold/10 transition-all">
+                            <svg class="w-5 h-5 text-brand-gold" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        </span>
+                        <span>WhatsApp Business</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="border-t border-brand-gold/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="glitch-wrapper">
+                    <div class="glitch text-2xl font-anton logo-3d" data-text="STUDIO 7">STUDIO 7</div>
+                </div>
+                <p class="font-inter text-brand-gold/40 text-sm">© 2026 Studio 7 Events. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Register ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            if (menu.classList.contains('translate-x-full')) {
+                menu.classList.remove('translate-x-full');
+            } else {
+                menu.classList.add('translate-x-full');
+            }
+        }
+
+        // Hero Animations on Load
+        window.addEventListener('load', () => {
+            const tl = gsap.timeline();
+            
+            tl.to('.hero-anim', {
+                y: 0,
+                opacity: 1,
+                duration: 1.2,
+                stagger: 0.2,
+                ease: "power4.out",
+                startAt: { y: 50, opacity: 0 }
+            });
+        });
+
+        // Scroll Reveal Animations
+        gsap.utils.toArray('.scroll-reveal-up').forEach(element => {
+            gsap.fromTo(element, 
+                { y: 50, opacity: 0 },
+                {
+                    y: 0,
+                    opacity: 1,
+                    duration: 1,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: element,
+                        start: "top 85%",
+                        toggleActions: "play none none reverse"
+                    }
+                }
+            );
+        });
+
+        gsap.utils.toArray('.scroll-reveal-left').forEach(element => {
+            gsap.fromTo(element,
+                { x: -50, opacity: 0 },
+                {
+                    x: 0,
+                    opacity: 1,
+                    duration: 1,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: element,
+                        start: "top 80%",
+                        toggleActions: "play none none reverse"
+                    }
+                }
+            );
+        });
+
+        gsap.utils.toArray('.scroll-reveal-right').forEach(element => {
+            gsap.fromTo(element,
+                { x: 50, opacity: 0 },
+                {
+                    x: 0,
+                    opacity: 1,
+                    duration: 1,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: element,
+                        start: "top 80%",
+                        toggleActions: "play none none reverse"
+                    }
+                }
+            );
+        });
+
+        // Parallax Effect for Hero Image
+        gsap.to(".video-bg", {
+            yPercent: 20,
+            ease: "none",
+            scrollTrigger: {
+                trigger: "body",
+                start: "top top",
+                end: "bottom top",
+                scrub: true
+            }
+        });
+
+        // Refresh ScrollTrigger on resize
+        window.addEventListener('resize', () => {
+            ScrollTrigger.refresh();
+        });
+    </script>
+</body>
+</html>
